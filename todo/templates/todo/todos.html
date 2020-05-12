@@ -1,0 +1,50 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!-- Ensures proper rendering and touch zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Forces IE 8/9/10 to use its latest rendering engine -->
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>To-Do List</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>To-Do List<i class="fa fa-plus"></i></h1>
+      <form autocomplete="off" class="" id="newTodo" action="/" method="post">
+        {% csrf_token %}
+        <input type="text" name="description" placeholder="Add new">
+        <input type="submit" name="submit" value="+">
+      </form>
+      <!-- Class 'sortable' enables sorting with jQuery UI method .sortable() -->
+      <ul class="sortable">
+        {% for todo in todos.all %}
+          <li><span><a href="/remove/{{todo.id}}"><i class="fa fa-trash"></i></a></span>{{todo.description}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>
+
+<!-- <table>
+  <th></th>
+  <th></th>
+  {% for todo in todos.all %}
+  <tr>
+    <td>{{todo.description}}</td>
+    <td><a href="/remove/{{todo.id}}">-</a></td>
+  </tr>
+  {% endfor %}
+</table>
+
+<form class="" action="/" method="post">
+  {% csrf_token %}
+  <input type="text" name="description" value="">
+  <input type="submit" name="submit" value="add">
+</form> -->
